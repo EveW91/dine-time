@@ -1,2 +1,58 @@
-<h1>Restaurants#show</h1>
-<p>Find me in app/views/restaurants/show.html.erb</p>
+<h1><%= @restaurant.name %></h1>
+
+<div class="restaurant-details-card">
+  <div class="book-reservation">
+    <%= link_to "Book reservation", new_restaurant_reservation_path(@restaurant), class: "login-button" %>
+  </div>
+  <div class="restaurant-address">
+    <%= @restaurant.street_address %>
+    <%= @restaurant.city %>
+    <%= @restaurant.county %>
+    <%= @restaurant.postcode %>
+  </div>
+  <div class="opening-times">
+    <%= @restaurant.opening_time.strftime("%I:%M %p") %>
+    <%= @restaurant.closing_time.strftime("%I:%M %p") %>
+  </div>
+</div>
+
+<div class="map-container">
+  <%= image_tag "map-placeholder.jpg", alt: "Map image", class: "map-box" %>
+</div>
+
+<div class="reviews-container">
+  <div class="leave-review">
+    <h2>Leave a Review</h2>
+    <%= simple_form_for([ @restaurant, @review ]) do |f| %>
+      <% if @review.errors.any? %>
+        <div class="error-messages">
+          <h3><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h3>
+          <ul>
+            <% @review.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <%= f.input :rating, as: :select, collection: [1, 2, 3, 4, 5], include_blank: false, label: "Rating (1-5)" %> <!-- Rating from 1 to 5 -->
+      </div>
+
+      <div class="field">
+        <%= f.input :comment, as: :text, label: "Your Review" %>
+      </div>
+
+      <div class="actions">
+        <%= f.button :submit, "Submit Review" %>
+      </div>
+    <% end %>
+  </div>
+  <% @reviews.each do |review| %>
+    <div class="review-card">
+      <%= review.user.email %>
+      <%= review.comment %>
+      <%= review.rating %>
+    </div>
+  <% end %>
+</div>
