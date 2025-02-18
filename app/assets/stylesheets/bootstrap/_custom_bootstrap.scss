@@ -1,0 +1,14 @@
+// _custom_bootstrap.scss
+
+// Override Bootstrap's $blue variable before importing Bootstrap's SCSS
+
+$blue: #044367;
+$gold: #C6A465;
+$light-blue: #759AAB;
+$red: #720E07;
+$coffee: #694A38;
+
+// Fonts
+
+$head-text: "Tangerine", serif;
+$body-text: "Bentham", serif;
