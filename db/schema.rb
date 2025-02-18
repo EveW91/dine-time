@@ -10,9 +10,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_18_133056) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_18_133853) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "reservations", force: :cascade do |t|
+    t.bigint "restaurant_id", null: false
+    t.bigint "user_id", null: false
+    t.date "date"
+    t.time "time"
+    t.string "status"
+    t.integer "party_size"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_reservations_on_restaurant_id"
+    t.index ["user_id"], name: "index_reservations_on_user_id"
+  end
+
+  create_table "restaurants", force: :cascade do |t|
+    t.string "name"
+    t.string "cuisine"
+    t.bigint "user_id", null: false
+    t.time "opening_time"
+    t.time "closing_time"
+    t.string "street_address"
+    t.string "city"
+    t.string "postcode"
+    t.string "county"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_restaurants_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "restaurant_id", null: false
+    t.integer "rating"
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_reviews_on_restaurant_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,4 +65,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_18_133056) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "reservations", "restaurants"
+  add_foreign_key "reservations", "users"
+  add_foreign_key "restaurants", "users"
+  add_foreign_key "reviews", "restaurants"
+  add_foreign_key "reviews", "users"
 end
