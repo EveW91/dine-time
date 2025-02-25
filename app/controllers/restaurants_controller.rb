@@ -22,6 +22,8 @@ class RestaurantsController < ApplicationController
   def edit
   end
 
+  private
+
   def review_params
     params.require(:review).permit(:comment, :rating)
   end
