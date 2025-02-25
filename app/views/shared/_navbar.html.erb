@@ -1,0 +1,12 @@
+<div class="nav-container">
+  <nav class="navbar">
+    <%= link_to root_path do %>
+      <%= image_tag "dine-time-logo.png", alt: "Dine Time Logo", class: "nav-logo" %>
+    <% end %>
+    <div class="link-list">
+      <p>Restaurant Search</p>
+      <p>Best Restaurants</p>
+    </div>
+    <%= link_to "Login", new_user_session_path, class: "login-button" %>
+  </nav>
+</div>
